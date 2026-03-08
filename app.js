@@ -1,7 +1,7 @@
 const tableTasks = document.querySelector("#tasks tbody");
 const btnAdd = document.getElementById("add-row");
 
-class SelectLabel{
+class SelectTags{
     static defaultOptions = [
         {name: "", value: ""},
         {name: "Trabalho", value: "trabalho"}, 
@@ -12,7 +12,10 @@ class SelectLabel{
 
     constructor(){
         this.element = document.createElement("select");
-        SelectLabel.defaultOptions.forEach(opt => this.addLabel(opt));
+
+        for (let option of SelectTags.defaultOptions){
+            this.addLabel(option);
+        }
     }
 
     addLabel({name, value}){
@@ -24,28 +27,93 @@ class SelectLabel{
     }
 }
 
-class TaskRow{
-    constructor({name = "", isCompleted = false, etiqueta = ""}){
-        this.element = document.createElement("tr");
-        
-        this.colName = document.createElement("td");
-        this.colName.textContent = name;
-        
-        this.colCheckbox = document.createElement("td");
-        this.checkbox = document.createElement("input");
-        this.checkbox.type = "checkbox";
-        this.checkbox.value = isCompleted;
-        this.colCheckbox.append(this.checkbox);
-        
-        this.colEtiqueta = document.createElement("td");
-        this.colEtiqueta.append(new SelectLabel().element);
-        
-        this.element.append(this.colCheckbox, this.colName, this.colEtiqueta);
+class Task{
+    constructor({name = "", isCompleted = false, tag = ""}){
+        this.id = crypto.randomUUID();
+        this.name = name;
+        this.isCompleted = isCompleted;
+        this.tag = tag;
     }
 }
+
+class TaskStorage{
+    static key = "tasks";
+
+    static update(updateList){
+        localStorage.setItem(TaskStorage.key, JSON.stringify(updateList));
+    }
+
+    static getAll(){
+        const items = localStorage.getItem(TaskStorage.key);
+
+        return items ? JSON.parse(items) : [];
+    }
+
+    static add (task) {
+        const allTasks = this.getAll();
+        allTasks.push(task);
+
+        this.update(allTasks);
+    }
+}
+
+class TaskRow{
+    constructor(task){
+        this.element = document.createElement("tr");
+        
+        this.element.append(
+            this.colCheck(task.isCompleted), 
+            this.colName(task.name), 
+            this.colTag(task.tag),
+            this.colTrash()
+        );
+    }
+
+    colCheck(isCompleted){
+        const col = document.createElement("td");
+        
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = isCompleted;
+        
+        col.append(checkbox);
+
+        return col;
+    }
+
+    colName(name){
+        const col = document.createElement("td");
+        col.textContent = name;
+
+        return col;
+    }
+
+    colTag(){
+        const col = document.createElement("td");
+        col.append(new SelectTags().element);
+
+        return col;
+    }
+
+    colTrash(){
+        const btn = document.createElement("button");
+        btn.innerText = "Excluir";
+        btn.onclick = () => this.element.remove();
+
+        return btn;
+    }
+}
+
+let i = 1;
 
 btnAdd.addEventListener("click", (e) => {
     e.preventDefault();
 
-    tableTasks.prepend(new TaskRow({name: "teste"}).element);
-});
+    const emptyTask = new Task({name: i});
+    const row = new TaskRow(emptyTask);
+    
+    TaskStorage.add(emptyTask);
+
+    tableTasks.prepend(row.element);
+    i++;
+}); 
