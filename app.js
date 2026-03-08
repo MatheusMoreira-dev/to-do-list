@@ -39,7 +39,7 @@ class Task{
 class TaskStorage{
     static key = "tasks";
 
-    static update(updateList){
+    static refreshStorage(updateList){
         localStorage.setItem(TaskStorage.key, JSON.stringify(updateList));
     }
 
@@ -53,12 +53,34 @@ class TaskStorage{
         const allTasks = this.getAll();
         allTasks.push(task);
 
-        this.update(allTasks);
+        this.refreshStorage(allTasks);
+    }
+
+    static delete(id){
+        const tasks = this.getAll();
+        const foundIndex = tasks.findIndex(v => v.id==id);
+
+        if(foundIndex != -1) tasks.splice(foundIndex, 1);
+        this.refreshStorage(tasks);
+    }
+
+    static patch(id, payload){
+        const tasks = this.getAll();
+        const foundIndex = tasks.findIndex(v => v.id == id);
+
+        if(foundIndex != -1){
+            console.log("passou");
+            for(let key in payload) tasks[foundIndex][key] = payload[key];
+            this.refreshStorage(tasks);
+        }
+
+        console.log("fim");
     }
 }
 
 class TaskRow{
     constructor(task){
+        this.task = task;
         this.element = document.createElement("tr");
         
         this.element.append(
@@ -74,7 +96,13 @@ class TaskRow{
         
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+        checkbox.checked = isCompleted;
         checkbox.value = isCompleted;
+        
+        checkbox.onclick = (e) => {
+            TaskStorage.patch(this.task.id, {"isCompleted": false});
+            console.log(this.task);
+        };
         
         col.append(checkbox);
 
@@ -99,11 +127,26 @@ class TaskRow{
     colTrash(){
         const btn = document.createElement("button");
         btn.innerText = "Excluir";
-        btn.onclick = () => this.element.remove();
+        btn.onclick = () => this.deleteRow();
 
         return btn;
     }
+
+    deleteRow(){
+        this.element.remove();
+        TaskStorage.delete(this.task.id);
+    }
 }
+
+function renderSaveTasks(){
+    const tasks = TaskStorage.getAll().map(v => new Task(v));
+    
+    for (let task of tasks){
+        tableTasks.prepend(new TaskRow(task).element);        
+    }
+}
+
+renderSaveTasks();
 
 let i = 1;
 
