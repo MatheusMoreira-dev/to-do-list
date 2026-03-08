@@ -87,7 +87,7 @@ class TaskRow{
         this.element.append(
             this.colCheck(task.isCompleted), 
             this.colName(task.name), 
-            this.colTag(),
+            this.colTag(task.tag),
             this.colTrash()
         );
     }
@@ -121,10 +121,16 @@ class TaskRow{
         return col;
     }
 
-    colTag(){
+    colTag(tag){
         const col = document.createElement("td");
-        col.append(new SelectTags().element);
+        const select = new SelectTags();
+        
+        select.element.value = tag;
+        this.task.tag = tag;
 
+        select.element.onchange(e => e);
+
+        col.append(select.element);
         return col;
     }
 
