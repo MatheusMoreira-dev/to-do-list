@@ -28,8 +28,8 @@ class SelectTags{
 }
 
 class Task{
-    constructor({name = "", isCompleted = false, tag = ""}){
-        this.id = crypto.randomUUID();
+    constructor({id, name = "", isCompleted = false, tag = ""}){
+        this.id = id;
         this.name = name;
         this.isCompleted = isCompleted;
         this.tag = tag;
@@ -51,6 +51,8 @@ class TaskStorage{
 
     static add (task) {
         const allTasks = this.getAll();
+        task["id"] = crypto.randomUUID();
+
         allTasks.push(task);
 
         this.refreshStorage(allTasks);
