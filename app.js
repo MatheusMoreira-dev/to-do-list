@@ -83,6 +83,7 @@ class TaskRow{
 
     colName(name){
         const col = document.createElement("td");
+        col.contentEditable = true;
         col.textContent = name;
 
         return col;
