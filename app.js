@@ -71,12 +71,11 @@ class TaskStorage{
         const foundIndex = tasks.findIndex(v => v.id == id);
 
         if(foundIndex != -1){
-            console.log("passou");
             for(let key in payload) tasks[foundIndex][key] = payload[key];
             this.refreshStorage(tasks);
         }
 
-        console.log("fim");
+        return tasks[foundIndex];
     }
 }
 
@@ -88,7 +87,7 @@ class TaskRow{
         this.element.append(
             this.colCheck(task.isCompleted), 
             this.colName(task.name), 
-            this.colTag(task.tag),
+            this.colTag(),
             this.colTrash()
         );
     }
@@ -102,8 +101,11 @@ class TaskRow{
         checkbox.value = isCompleted;
         
         checkbox.onclick = (e) => {
-            TaskStorage.patch(this.task.id, {"isCompleted": false});
-            console.log(this.task);
+            const boolValue = e.target.checked;
+            const patchTask = TaskStorage.patch(this.task.id, {"isCompleted": boolValue});
+            
+            e.target.value = boolValue;
+            this.task = patchTask;
         };
         
         col.append(checkbox);
