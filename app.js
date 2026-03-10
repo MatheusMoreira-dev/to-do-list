@@ -1,5 +1,5 @@
 const tableTasks = document.querySelector("#tasks tbody");
-const btnAdd = document.getElementById("add-row");
+const btnAdd = document.getElementById("add-task");
 
 class SelectTags {
   static defaultOptions = [
@@ -85,18 +85,19 @@ class TaskRow {
     this.element = document.createElement("tr");
 
     this.element.append(
-      this.colCheck(task.isCompleted),
+      this.colCheckbox(task.isCompleted),
       this.colName(task.name),
       this.colTag(task.tag),
       this.colTrash(),
     );
   }
 
-  colCheck(isCompleted) {
+  colCheckbox(isCompleted) {
     const col = document.createElement("td");
     col.classList.add("col-status");
 
     const checkbox = document.createElement("input");
+    checkbox.classList.add("checkbox");
     checkbox.type = "checkbox";
     checkbox.checked = isCompleted;
     checkbox.value = isCompleted;

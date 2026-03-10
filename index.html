@@ -17,18 +17,29 @@
         <button>Pendentes</button>
       </div>
 
-      <button id="add-row" class="add-row">Adicionar</button>
+      <button id="add-task">
+        <img class="icon" />
+        <span>Adicionar</span>
+      </button>
 
       <div class="wrapper-table">
-        <table id="tasks">
+        <table id="tasks" class="tasks-table">
+          <colgroup>
+            <col class="col-checkbox" />
+            <col class="col-name" />
+            <col class="col-tag" />
+            <col class="col-trash" />
+          </colgroup>
+
           <thead>
             <tr>
-              <th class="col-status">Status</th>
+              <th>Status</th>
               <th>Nome</th>
               <th>Etiqueta</th>
               <th></th>
             </tr>
           </thead>
+
           <tbody></tbody>
         </table>
       </div>
