@@ -11,16 +11,17 @@
     <main>
       <h1>TO-DO LIST</h1>
 
-      <div class="filtros">
-        <button>Todos</button>
-        <button>Concluídos</button>
-        <button>Pendentes</button>
-      </div>
+      <div class="wrapper-actions">
+        <div class="filters">
+          <button>Concluídos</button>
+          <button>Pendentes</button>
+        </div>
 
-      <button id="add-task">
-        <img class="icon" />
-        <span>Adicionar</span>
-      </button>
+        <button id="add-task">
+          <span class="icon">+</span>
+          <span class="name">Adicionar Tarefa</span>
+        </button>
+      </div>
 
       <div class="wrapper-table">
         <table id="tasks" class="tasks-table">

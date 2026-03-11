@@ -11,6 +11,7 @@
   border: none;
   padding: 0;
   margin: 0;
+  background: none;
   font: inherit;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -31,7 +32,7 @@ main {
   margin-top: 100px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 15px;
 }
 
 main > h1 {
@@ -40,23 +41,44 @@ main > h1 {
   text-align: center;
 }
 
+.wrapper-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+}
+
 #add-task {
-  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0px 30px 2px 30px;
+  border-bottom: 1px solid black;
+}
+
+#add-task .name {
   font-size: 0.8rem;
   font-style: italic;
-  background: none;
-  padding-bottom: 2px;
-  border-bottom: 1px solid black;
+}
+
+#add-task .icon {
+  font-weight: bold;
+  font-size: 1.2rem;
+  font-family: "Courier New", monospace;
 }
 
 #add-task:hover {
   cursor: pointer;
+  color: blue;
+  border-color: blue;
 }
 
 .wrapper-table {
   width: 900px;
   max-height: 500px;
   overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .tasks-table {
@@ -75,15 +97,14 @@ main > h1 {
 
 .tasks-table th {
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: bold;
   font-style: italic;
 }
 
 .tasks-table th,
 .tasks-table td {
-  padding: 5px;
   border-bottom: 1px dotted gray;
-  word-wrap: break-word;
+  padding: 5px;
 }
 
 .col-checkbox {
