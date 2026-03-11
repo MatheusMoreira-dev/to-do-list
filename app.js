@@ -82,9 +82,9 @@ class TaskStorage {
 class TaskRow {
   constructor(task) {
     this.task = task;
-    this.rowElement = document.createElement("tr");
+    this.row = document.createElement("tr");
 
-    this.rowElement.append(
+    this.row.append(
       this.colCheckbox(task.isCompleted),
       this.colName(task.name),
       this.colTag(task.tag),
@@ -97,7 +97,7 @@ class TaskRow {
     col.classList.add("col-status");
 
     const checkbox = document.createElement("input");
-    checkbox.classList.add("checkbox");
+    checkbox.classList.add("cell-content", "checkbox");
     checkbox.type = "checkbox";
     checkbox.checked = isCompleted;
     checkbox.value = isCompleted;
@@ -132,8 +132,11 @@ class TaskRow {
 
   colTag(tag) {
     const col = document.createElement("td");
-    const select = new SelectTags();
 
+    const content = document.createElement("div");
+    content.classList.add("cell-content");
+
+    const select = new SelectTags();
     select.element.value = tag;
     this.task.tag = tag;
 
@@ -154,7 +157,7 @@ class TaskRow {
   }
 
   deleteRow() {
-    this.rowElement.remove();
+    this.row.remove();
     TaskStorage.delete(this.task.id);
   }
 }
@@ -163,7 +166,7 @@ function renderSaveTasks() {
   const tasks = TaskStorage.getAll().map((v) => new Task(v));
 
   for (let task of tasks) {
-    tableTasks.prepend(new TaskRow(task).rowElement);
+    tableTasks.prepend(new TaskRow(task).row);
   }
 }
 
@@ -179,6 +182,6 @@ btnAdd.addEventListener("click", (e) => {
 
   TaskStorage.add(emptyTask);
 
-  tableTasks.prepend(row.rowElement);
+  tableTasks.prepend(row.row);
   i++;
 });
