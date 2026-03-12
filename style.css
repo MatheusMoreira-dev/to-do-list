@@ -48,6 +48,10 @@ main > h1 {
   font-size: 0.8rem;
 }
 
+.tab-button.disabled {
+  color: gray;
+}
+
 .tab-button,
 #add-task {
   display: flex;
@@ -57,14 +61,14 @@ main > h1 {
   padding: 0px 10px 2px 10px;
 }
 
-.tab-button:disabled:hover,
+.tab-button.disabled:hover,
 #add-task:hover {
   cursor: pointer;
   color: blue;
   border-color: blue;
 }
 
-.tab-button:not(:disabled) {
+.tab-button:not(.disabled) {
   border-bottom: 1px solid blue;
   color: blue;
 }

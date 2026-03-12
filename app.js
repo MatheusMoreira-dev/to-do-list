@@ -1,30 +1,34 @@
-import { Task } from "./scripts/models.js";
-import { TaskStorage } from "./scripts/storage.js";
-import { SelectTags, TaskRow } from "./scripts/layout.js";
+import { ToDoService } from "./scripts/services.js";
 
-const tableTasks = document.querySelector("#tasks tbody");
 const btnAdd = document.getElementById("add-task");
 
-function renderSaveTasks() {
-  const tasks = TaskStorage.getAll().map((v) => new Task(v));
+const btnFilterToDo = document.getElementById("filter-to-do");
+const btnFilterCompleted = document.getElementById("filter-completed");
 
-  for (let task of tasks) {
-    tableTasks.prepend(new TaskRow(task).row);
-  }
-}
-
-renderSaveTasks();
+ToDoService.showToDo();
 
 let i = 1;
 
 btnAdd.addEventListener("click", (e) => {
   e.preventDefault();
 
-  const emptyTask = new Task({ name: i });
-  const row = new TaskRow(emptyTask);
+  ToDoService.createTask({ name: i });
 
-  TaskStorage.add(emptyTask);
-
-  tableTasks.prepend(row.row);
   i++;
+});
+
+btnFilterCompleted.addEventListener("click", (e) => {
+  e.preventDefault();
+  btnFilterCompleted.classList.remove("disabled");
+  btnFilterToDo.classList.add("disabled");
+
+  ToDoService.showCompleted();
+});
+
+btnFilterToDo.addEventListener("click", (e) => {
+  e.preventDefault();
+  btnFilterToDo.classList.remove("disabled");
+  btnFilterCompleted.classList.add("disabled");
+
+  ToDoService.showToDo();
 });

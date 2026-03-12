@@ -1,79 +1,53 @@
-export class ToDoStorage {
-  static key = "to-do-list";
-
-  static refreshStorage(updateList) {
-    localStorage.setItem(ToDoStorage.key, JSON.stringify(updateList));
-  }
-
-  static getAll() {
-    const items = localStorage.getItem(ToDoStorage.key);
-
-    return items ? JSON.parse(items) : [];
-  }
-
-  static findById(id) {
-    const all = this.getAll();
-    const found = all.find((t) => t.id == id);
-
-    if (!found) throw new Error("Lista não encontrada");
-
-    return found;
-  }
-
-  static add(toDoList) {
-    const all = this.getAll();
-    toDoList["id"] = crypto.randomUUID();
-
-    all.push(toDoList);
-
-    this.refreshStorage(all);
-  }
-
-  static delete(id) {
-    const all = this.getAll();
-    const foundIndex = all.findIndex((v) => v.id == id);
-
-    if (foundIndex != -1) all.splice(foundIndex, 1);
-    this.refreshStorage(all);
-  }
-
-  static patch(id, payload) {
-    const all = this.getAll();
-    const foundIndex = all.findIndex((v) => v.id == id);
-
-    if (foundIndex != -1) {
-      for (let key in payload) all[foundIndex][key] = payload[key];
-      this.refreshStorage(all);
-    }
-
-    return all[foundIndex];
-  }
-}
-
 export class TaskStorage {
   static key = "tasks";
 
-  static refreshStorage(updateList) {
-    localStorage.setItem(TaskStorage.key, JSON.stringify(updateList));
-  }
+  static structure = {
+    "to-do": [],
+    completed: [],
+  };
 
-  static getAll() {
+  static getStorage() {
     const items = localStorage.getItem(TaskStorage.key);
 
     return items ? JSON.parse(items) : [];
   }
 
-  static add(task) {
-    const allTasks = this.getAll();
+  static getToDo() {
+    return this.getStorage()["to-do"];
+  }
+
+  static getCompleted() {
+    return this.getStorage()["completed"];
+  }
+
+  static refreshToDo(updateList) {
+    const all = this.getStorage();
+    all["to-do"] = updateList;
+
+    this.refreshStorage(all);
+  }
+
+  static refreshCompleted(updateList) {
+    const all = this.getStorage();
+    all["completed"] = updateList;
+
+    this.refreshStorage(all);
+  }
+
+  static refreshStorage(updateList) {
+    localStorage.setItem(TaskStorage.key, JSON.stringify(updateList));
+  }
+
+  static addToDo(task) {
+    const all = this.getToDo();
     task["id"] = crypto.randomUUID();
 
-    allTasks.push(task);
-
-    this.refreshStorage(allTasks);
+    all.push(task);
+    this.refreshToDo(all);
   }
 
   static delete(id) {
-    const tasks = this.getAll();
+    const tasks = this.getStorage();
     const foundIndex = tasks.findIndex((v) => v.id == id);
 
     if (foundIndex != -1) tasks.splice(foundIndex, 1);
@@ -81,7 +55,7 @@ export class TaskStorage {
   }
 
   static patch(id, payload) {
-    const tasks = this.getAll();
+    const tasks = this.getStorage();
     const foundIndex = tasks.findIndex((v) => v.id == id);
 
     if (foundIndex != -1) {
