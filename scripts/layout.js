@@ -1,3 +1,5 @@
+import { TaskStorage } from "./storage.js";
+
 export class SelectTags {
   static defaultOptions = [
     { name: "", value: "" },
@@ -24,7 +26,11 @@ export class SelectTags {
   }
 }
 
-export class ToDoView {}
+export class ToDoView {
+  static showCompleted() {}
+
+  static showToDo() {}
+}
 
 export class TaskRow {
   constructor(task) {
