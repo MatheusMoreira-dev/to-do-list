@@ -11,6 +11,15 @@ export class ToDoStorage {
     return items ? JSON.parse(items) : [];
   }
 
+  static findById(id) {
+    const all = this.getAll();
+    const found = all.find((t) => t.id == id);
+
+    if (!found) throw new Error("Lista não encontrada");
+
+    return found;
+  }
+
   static add(toDoList) {
     const all = this.getAll();
     toDoList["id"] = crypto.randomUUID();

@@ -1,4 +1,5 @@
-import { TaskStorage } from "./storage.js";
+import { ToDoStorage, TaskStorage } from "./storage.js";
+import { ToDoList, Task } from "./models.js";
 
 export class SelectTags {
   static defaultOptions = [
@@ -27,6 +28,19 @@ export class SelectTags {
 }
 
 export class ToDoView {
+  constructor(id) {
+    this.id = id;
+
+    const found = ToDoStorage.findById(id);
+    if (found) this.toDo = new ToDoList(found);
+  }
+
+  showTitle() {}
+
+  showButtons() {}
+
+  showTable() {}
+
   static showCompleted() {}
 
   static showToDo() {}
