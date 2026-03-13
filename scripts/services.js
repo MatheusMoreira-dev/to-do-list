@@ -2,7 +2,7 @@ import { TaskRow } from "./layout.js";
 import { Task } from "./models.js";
 import { TaskStorage } from "./storage.js";
 
-export class ToDoService {
+export class ToDoManager {
   static bodyElement = document.querySelector("#tasks tbody");
 
   // Edita o título
@@ -16,7 +16,7 @@ export class ToDoService {
      3 - Mostra na tabela a nova Task
     */
     const task = new Task(data);
-    TaskStorage.addToDo(task);
+    TaskStorage.createTask(task);
     this.bodyElement.prepend(new TaskRow(task).row);
   }
 
@@ -27,7 +27,7 @@ export class ToDoService {
      2 - Converte em objetos da classe Task e posterior mente em linhas
      3 - Remove os nodes e adiciona os novos
     */
-    const data = TaskStorage.getToDo();
+    const data = TaskStorage.listToDoTasks();
     const tasksRow = data
       .map((d) => new Task(d))
       .map((t) => new TaskRow(t).row);
@@ -42,7 +42,7 @@ export class ToDoService {
      2 - Converte em objetos da classe Task e posteriormente em do tipo TaskRow
      3 - Remove os nodes e adiciona os novos
     */
-    const data = TaskStorage.getCompleted();
+    const data = TaskStorage.listCompletedTasks();
     const tasksRow = data
       .map((d) => new Task(d))
       .map((t) => new TaskRow(t).row);

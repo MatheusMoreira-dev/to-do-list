@@ -1,18 +1,19 @@
-import { ToDoService } from "./scripts/services.js";
+import { ToDoManager } from "./scripts/services.js";
+import { ToDoStorage } from "./scripts/storage.js";
 
 const btnAdd = document.getElementById("add-task");
 
 const btnFilterToDo = document.getElementById("filter-to-do");
 const btnFilterCompleted = document.getElementById("filter-completed");
 
-ToDoService.showToDo();
+ToDoManager.showToDo();
 
 let i = 1;
 
 btnAdd.addEventListener("click", (e) => {
   e.preventDefault();
 
-  ToDoService.createTask({ name: i });
+  ToDoManager.createTask({ name: i });
 
   i++;
 });
@@ -22,7 +23,7 @@ btnFilterCompleted.addEventListener("click", (e) => {
   btnFilterCompleted.classList.remove("disabled");
   btnFilterToDo.classList.add("disabled");
 
-  ToDoService.showCompleted();
+  ToDoManager.showCompleted();
 });
 
 btnFilterToDo.addEventListener("click", (e) => {
@@ -30,5 +31,5 @@ btnFilterToDo.addEventListener("click", (e) => {
   btnFilterToDo.classList.remove("disabled");
   btnFilterCompleted.classList.add("disabled");
 
-  ToDoService.showToDo();
+  ToDoManager.showToDo();
 });

@@ -1,8 +1,9 @@
 export class ToDoList {
-  constructor({ id, title, tasks = [] }) {
+  constructor({ id, title, toDo = [], completed = [] }) {
     this.id = id;
     this.title = title;
-    this.tasks = tasks;
+    this.toDo = toDo;
+    this.completed = completed;
   }
 }
 
