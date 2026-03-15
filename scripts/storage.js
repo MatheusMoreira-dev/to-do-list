@@ -14,7 +14,7 @@ export class ToDoStorage {
     localStorage.setItem(ToDoStorage.key, JSON.stringify(updateList));
   }
 
-  static add(toDoList) {
+  static create(toDoList) {
     const all = this.getAll();
     toDoList["id"] = crypto.randomUUID();
 
@@ -44,7 +44,7 @@ export class ToDoStorage {
 }
 
 export class TaskStorage {
-  static toDoId = "tasks";
+  static toDoId;
 
   static structure = {
     "to-do": [],

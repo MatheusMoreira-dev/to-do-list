@@ -8,45 +8,68 @@
     <title>To-do List</title>
   </head>
   <body>
-    <main>
-      <h1>TO-DO LIST</h1>
+    <header></header>
 
-      <div class="wrapper-actions">
-        <div class="filters">
-          <button id="filter-to-do" class="tab-button to-do">Pendentes</button>
-          <button id="filter-completed" class="tab-button completed disabled">
-            Concluídos
+    <main>
+      <div class="to-do-view">
+        <h1 class="to-do-title">TO-DO LIST</h1>
+
+        <div class="wrapper-actions">
+          <div class="tabs">
+            <button id="filter-to-do" class="tab-button to-do">
+              Pendentes
+            </button>
+            <button id="filter-completed" class="tab-button completed disabled">
+              Concluídos
+            </button>
+          </div>
+
+          <button id="add-task">
+            <span class="icon">+</span>
+            <span class="name">Adicionar Tarefa</span>
           </button>
         </div>
 
-        <button id="add-task">
-          <span class="icon">+</span>
-          <span class="name">Adicionar Tarefa</span>
-        </button>
-      </div>
+        <div class="wrapper-table">
+          <table id="tasks" class="tasks-table">
+            <colgroup>
+              <col class="col-checkbox" />
+              <col class="col-name" />
+              <col class="col-tag" />
+              <col class="col-trash" />
+            </colgroup>
 
-      <div class="wrapper-table">
-        <table id="tasks" class="tasks-table">
-          <colgroup>
-            <col class="col-checkbox" />
-            <col class="col-name" />
-            <col class="col-tag" />
-            <col class="col-trash" />
-          </colgroup>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Nome</th>
+                <th>Etiqueta</th>
+                <th></th>
+              </tr>
+            </thead>
 
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Nome</th>
-              <th>Etiqueta</th>
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody></tbody>
-        </table>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </main>
+
+    <aside class="sidebar">
+      <div class="hamburguer-menu">
+        <input type="checkbox" id="open" />
+        
+        <label for="open">
+          <span>&#9776</span>
+        </label>
+      </div>
+
+      <aside>
+        <ul class="to-do-files"></ul>
+      </aside>
+    </aside>
+
+
+    <footer></footer>
 
     <script type="module" src="app.js"></script>
   </body>
