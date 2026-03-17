@@ -29,6 +29,44 @@ body {
 main {
   height: 100%;
   position: relative;
+  overflow: hidden;
+}
+
+.side-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.side-bar:has(#open-side-bar:checked) {
+  width: 100%;
+  height: 100%;
+  background: (to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+}
+
+#open-side-bar {
+  display: none;
+}
+
+.side-bar__content {
+  display: none;
+  height: 100%;
+  width: clamp(300px, 20dvw, 1000px);
+}
+
+#open-side-bar:checked ~ .side-bar__content {
+  display: block;
+  background-color: #355872;
+}
+
+.hamburguer-icon {
+  font-size: x-large;
+}
+
+.hamburguer-icon:hover {
+  cursor: pointer;
 }
 
 .to-do-view {
@@ -158,14 +196,4 @@ main {
 
 .trash:hover {
   cursor: pointer;
-}
-
-.sidebar {
-  position: absolute;
-  top: 0;
-  z-index: 1000;
-
-  width: clamp(300px, 20dvw, 1000px);
-  height: 100%;
-  background-color: #355872;
 }

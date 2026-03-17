@@ -8,9 +8,19 @@
     <title>To-do List</title>
   </head>
   <body>
-    <header></header>
-
     <main>
+      <aside class="side-bar">
+        <input type="checkbox" id="open-side-bar" />
+        
+        <label for="open-side-bar">
+          <span class="hamburguer-icon">&#9776</span>
+        </label>
+
+        <div class="side-bar__content">
+          <ul class="to-do-files"></ul>
+        </div>
+      </aside>
+
       <div class="to-do-view">
         <h1 class="to-do-title">TO-DO LIST</h1>
 
@@ -53,24 +63,6 @@
         </div>
       </div>
     </main>
-
-    <aside class="sidebar">
-      <div class="hamburguer-menu">
-        <input type="checkbox" id="open" />
-        
-        <label for="open">
-          <span>&#9776</span>
-        </label>
-      </div>
-
-      <aside>
-        <ul class="to-do-files"></ul>
-      </aside>
-    </aside>
-
-
-    <footer></footer>
-
     <script type="module" src="app.js"></script>
   </body>
 </html>
