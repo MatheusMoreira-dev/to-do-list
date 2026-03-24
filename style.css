@@ -23,7 +23,6 @@ html,
 body {
   width: 100dvw;
   height: 100%;
-  position: relative;
 }
 
 main {
@@ -34,16 +33,14 @@ main {
 
 .side-bar {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 20px;
+  left: 20px;
   z-index: 1000;
-  padding: 20px;
 }
 
 .side-bar:has(#open-side-bar:checked) {
   width: 100%;
   height: 100%;
-  background: (to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
 }
 
 #open-side-bar {
@@ -53,7 +50,8 @@ main {
 .side-bar__content {
   display: none;
   height: 100%;
-  width: clamp(300px, 20dvw, 1000px);
+  width: clamp(300px, 20dvw, 100%);
+  padding: 20px;
 }
 
 #open-side-bar:checked ~ .side-bar__content {
@@ -61,8 +59,17 @@ main {
   background-color: #355872;
 }
 
+#open-side-bar:checked + .btn-menu .hamburguer-icon {
+  font-size: 0;
+}
+
+#open-side-bar:checked + .btn-menu .hamburguer-icon::before {
+  content: "X";
+  font-size: xx-large;
+}
+
 .hamburguer-icon {
-  font-size: x-large;
+  font-size: xx-large;
 }
 
 .hamburguer-icon:hover {
@@ -73,9 +80,8 @@ main {
   width: clamp(320px, 900px, 75dvw);
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 20%;
+  top: 15%;
   left: 50%;
-
   display: flex;
   flex-direction: column;
   gap: 15px;

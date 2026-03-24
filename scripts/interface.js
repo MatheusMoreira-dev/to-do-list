@@ -1,4 +1,30 @@
-import { TaskStorage } from "./storage.js";
+import { ToDoStorage } from "./storage.js";
+
+export class AppView {
+  // Main content
+  // Side Bar
+}
+
+export class ToDoView {
+  static element = document.createElement("div");
+  static title = document.createElement("h1");
+  static actionsBar = document.createElement("div");
+
+  static setTitle(title) {
+    this.title.textContent = title;
+  }
+
+  static render() {
+    this.element.appendChild(this.title);
+    this.element.appendChild(this.actionsBar);
+
+    return this.element;
+  }
+  // Título
+  // Tab (pendentes ou concluidas)
+  // Botão de adicionar
+  // Tabela com Tasks ()
+}
 
 export class SelectTags {
   static defaultOptions = [

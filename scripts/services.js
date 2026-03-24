@@ -1,6 +1,6 @@
-import { TaskRow } from "./layout.js";
+import { TaskRow } from "./interface.js";
 import { Task } from "./models.js";
-import { TaskStorage } from "./storage.js";
+import { ToDoStorage } from "./storage.js";
 
 export class ToDoManager {
   static bodyElement = document.querySelector("#tasks tbody");

@@ -43,74 +43,72 @@ export class ToDoStorage {
   }
 }
 
-export class TaskStorage {
+export class TaskService {
   static toDoId;
 
-  static structure = {
-    "to-do": [],
-    completed: [],
-  };
-
-  static getToDoList() {
-    return ToDoStorage.getById(TaskStorage.toDoId);
+  // Obter ToDo
+  static getToDoRef() {
+    return ToDoStorage.getById(TaskService.toDoId);
   }
 
-  static listToDoTasks() {
-    return this.getToDoList()["toDo"];
+  // Obter lista de todas as tarefas concluídas
+  static getToDoTasks() {
+    return this.getToDoRef()["toDo"];
   }
 
-  static listCompletedTasks() {
-    return this.getToDoList()["completed"];
+  // Obter lista de todas as tarefas pendentes
+  static getCompletedTasks() {
+    return this.getToDoRef()["completed"];
   }
 
+  // Criar uma nova tarefa pendente
   static createTask(task) {
     /*
-    1 - Buscar o item ToDo no ToDoStorage
-    2 - Obter a lista de tarefas pendentes
+    1 - Obter a lista de tarefas pendentes
+    2 - Inserir o id na task
     3 - Adicionar na lista de tarefas pendentes a nova tarefa
-    4 - Atualizar o attr "toDo" no objeto com a lista atualizada
-    5 - Ataulizar o registro do objeto no Storage
+    4 - Salvar lista atualizada no storage
     */
-    const list = this.listToDoTasks();
+    const list = this.getToDoTasks();
     task["id"] = crypto.randomUUID();
 
     list.push(task);
     this.refreshToDo(list);
   }
 
-  static refreshStorage(updateList) {
-    localStorage.setItem(TaskStorage.toDoId, JSON.stringify(updateList));
+  static editToDoRef(patch) {
+    ToDoStorage.patch(TaskService.toDoId, patch);
   }
 
   static refreshToDo(updateList) {
-    const all = this.listToDoTasks();
+    const all = this.getToDoTasks();
     all["to-do"] = updateList;
 
-    this.refreshStorage(all);
+    this.editToDoRef(all);
   }
 
   static refreshCompleted(updateList) {
-    const all = this.getToDoList();
+    const all = this.getToDoRef();
     all["completed"] = updateList;
 
-    this.refreshStorage(all);
+    this.editToDoRef(all);
   }
 
   static delete(id) {
-    const tasks = this.getToDoList();
+    const tasks = this.getToDoRef();
     const foundIndex = tasks.findIndex((v) => v.id == id);
 
     if (foundIndex != -1) tasks.splice(foundIndex, 1);
-    this.refreshStorage(tasks);
+    this.editToDoRef(tasks);
   }
 
   static patch(id, payload) {
-    const tasks = this.getToDoList();
+    const tasks = this.getToDoRef();
     const foundIndex = tasks.findIndex((v) => v.id == id);
 
     if (foundIndex != -1) {
       for (let key in payload) tasks[foundIndex][key] = payload[key];
-      this.refreshStorage(tasks);
+      this.editToDoRef(tasks);
     }
 
     return tasks[foundIndex];

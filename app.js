@@ -1,4 +1,4 @@
-import { ToDoManager } from "./scripts/services.js";
+/*import { ToDoManager } from "./scripts/services.js";
 import { ToDoStorage } from "./scripts/storage.js";
 
 const btnAdd = document.getElementById("add-task");
@@ -12,24 +12,30 @@ let i = 1;
 
 btnAdd.addEventListener("click", (e) => {
   e.preventDefault();
-
+  
   ToDoManager.createTask({ name: i });
-
+  
   i++;
-});
+  });
+  
+  btnFilterCompleted.addEventListener("click", (e) => {
+    e.preventDefault();
+    btnFilterCompleted.classList.remove("disabled");
+    btnFilterToDo.classList.add("disabled");
+    
+    ToDoManager.showCompleted();
+    });
+    
+    btnFilterToDo.addEventListener("click", (e) => {
+      e.preventDefault();
+      btnFilterToDo.classList.remove("disabled");
+      btnFilterCompleted.classList.add("disabled");
+      
+      ToDoManager.showToDo();
+      });
+*/
 
-btnFilterCompleted.addEventListener("click", (e) => {
-  e.preventDefault();
-  btnFilterCompleted.classList.remove("disabled");
-  btnFilterToDo.classList.add("disabled");
-
-  ToDoManager.showCompleted();
-});
-
-btnFilterToDo.addEventListener("click", (e) => {
-  e.preventDefault();
-  btnFilterToDo.classList.remove("disabled");
-  btnFilterCompleted.classList.add("disabled");
-
-  ToDoManager.showToDo();
-});
+import { ToDoView } from "./scripts/interface.js";
+ToDoView.setTitle("Teste");
+document.querySelector("main").appendChild(ToDoView.render());
+ToDoView.setTitle("Algo");
